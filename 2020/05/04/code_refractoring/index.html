@@ -23,8 +23,9 @@
 <meta property="og:description" content="前文对本书的的评论无外乎是“本程序员的案头书”，“如果能在职业生涯初期读到这本书能少写多少恶臭的代码”云云。言而总之，这本书应该相当适合初入职场&#x2F;尚未形成个人代码风格&#x2F;读到屎山不是选择含泪生吞而是想把始作俑者活剥&#x2F;一个有公德心的代码贡献者的fresh coder。">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/15098936-46dea6b1bf5c81d7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/15098936-e1bfcdd8fb79d47f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="article:published_time" content="2020-05-04T03:06:09.000Z">
-<meta property="article:modified_time" content="2020-05-04T07:04:37.812Z">
+<meta property="article:modified_time" content="2020-05-05T08:44:31.800Z">
 <meta property="article:author" content="Jarvis Yao">
 <meta property="article:tag" content="设计与重构">
 <meta name="twitter:card" content="summary">
@@ -337,7 +338,49 @@ createStatementData.js<figure class="highlight plain"><table><tr><td class="gutt
 <li>采用<a href="https://memberservices.informit.com/my_account/webedition/9780135425664/html/splitphase.html" target="_blank" rel="noopener">拆分阶段 Split Phase</a>分离计算逻辑和格式化输出</li>
 <li>为计算器引入多态性处理计算逻辑</li>
 </ol>
-<p>——未完待续——<br>2020.05.03</p>
+<h1 id="第二章-重构的原则"><a href="#第二章-重构的原则" class="headerlink" title="第二章 重构的原则"></a>第二章 重构的原则</h1><p>这两天忙着维护github page了，结果再读第二章就已经是两天后的事情了。第二章作者说明了<strong>何为重构</strong>，<strong>为何重构</strong>和<strong>何时重构</strong>。</p>
+<blockquote>
+<p><strong>重构/名词</strong>，对软件内部的一种调整，目的是在不改变软件可观察行为的前提下，提高其可理解性，降低其修改成本。<br><strong>Refactoring</strong> (noun): a change made to the internal structure of software to make it easier to understand and cheaper to modify without changing its observable behavior.</p>
+</blockquote>
+<blockquote>
+<p><strong>重构/动词</strong>，使用一系列的重构手法，在不改变软件可观察行为的前提下，调整其结构。<br><strong>Refactoring</strong> (verb): to restructure software by applying a series of refactorings without changing its observable behavior.</p>
+</blockquote>
+<h2 id="两顶帽子"><a href="#两顶帽子" class="headerlink" title="两顶帽子"></a>两顶帽子</h2><p>由<strong><em>Kent Beck</em></strong>提出的两顶帽子理论，表示程序员的工作时间分配给两种截然不同的行为：<code>添加新功能</code>和<code>重构</code>。外国友人是真喜欢用帽子做比喻…</p>
+<h2 id="为何重构"><a href="#为何重构" class="headerlink" title="为何重构"></a>为何重构</h2><ul>
+<li>重构改进软件的设计</li>
+<li>重构使软件更容易理解</li>
+<li>重构帮助发现bug</li>
+<li>重构提高编程速度</li>
+</ul>
+<p>在此我把程序员理想中重构应该实现的效果图摘录一下：<br><img src="https://upload-images.jianshu.io/upload_images/15098936-e1bfcdd8fb79d47f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="pseudograph.png"></p>
+<h2 id="何时重构"><a href="#何时重构" class="headerlink" title="何时重构"></a>何时重构</h2><blockquote>
+<p><strong><em>The Rule of Three</em></strong><br>Here’s a guideline Don Roberts gave me: The first time you do something, you just do it. The second time you do something similar, you wince at the duplication, but you do the duplicate thing anyway. The third time you do something similar, you refactor.<br>Or for those who like baseball: Three strikes, then you refactor.<br><strong><em>三次法则</em></strong><br>Don Roberts分享的准则中说到，凡遇事也，旦一且做，遇之再也，蹙眉做之，其三遇之，当思重构。</p>
+</blockquote>
+<ul>
+<li>预备性重构：让添加新功能更容易</li>
+<li>帮助理解的重构：使代码更易懂</li>
+<li>捡垃圾式重构</li>
+<li>有计划的重构和见机行事的重构</li>
+<li>长期重构</li>
+<li>复审代码时重构</li>
+</ul>
+<p>读至此处我不由得开始反思工作以来遇到的许多项目，有些是重头开始设计，有些是半途接手，在自己管辖内大动干戈者有之，在别人壁炉上零敲碎打者有之。项目经验积累的越多，越感觉到架构的重要性。所谓架构，并不是arch的特权，通常情况是真正负责功能实现的人先草拟出系统的架构，再和架构师根据文档就细节进行讨论。而一个系统的好坏，往往可以从后续经手者的口口相传中获知一二，尽管“薄古厚今”的传统在技术人员中也广为流传。接手他人业务时，往往有尾大不掉之惑，一则在于项目的tech leader是否有丰富的项目接手经验，能够在交接过程中快速掌握业务功能的七寸并从原生团队中获得经验，另外接手者往往苦恼于，代码组织混乱，变量中间状态存储介质/变化法则不明，在缺乏文档（文档管理混乱/缺乏实效性）的情况下学习成本大大增加。<br>而另一位同事接手的<strong><em>System Refine</em></strong>工作中，需要将系统代码里经年累月累积的“特效药”代码进行分析评估并尽可能移除积弊。作为偶尔坐她旁边帮着分析过一段时间的经历者，我大概能明白为什么她的工作时间直线攀升。这类代码的特质往往是创造者/经手者大多已经离职或者远离coding一线，没有明确的方法注释，有很强的上下游业务依赖。因此分析起来往往需要经过提出猜测——本地debug验证猜测——找到上下游client确认是否仍旧需要的周期性反复工序。这些特效药代码，无非是业务需求下，笨拙的系统为了接纳新的功能产生的排异反应，开发者为了快速在两幢大楼间建立通道，无暇测量预留接口的大小是否合适，要么是把口子扯扯大，要么是用特殊质地的材料把接口塞塞紧，末了还在不起眼处打几颗至关重要的螺丝钉。工期结束楼盘交付后就不再想着怎么优化原有的不合理结构。<br>但其实作者也承认，实际情况下，当一块ugly code的存在不影响现有业务/接洽新的功能时，大部分情况下是可以容忍的。而一个系统的重构难度一旦过大，那迎来的就将是推翻重建。<br>大人 不是时代变了 朕的大清亡了 是因为其身上再没有一点能够流通的血液了</p>
+<h2 id="重构的挑战"><a href="#重构的挑战" class="headerlink" title="重构的挑战"></a>重构的挑战</h2><ul>
+<li>延缓新功能开发</li>
+<li>代码所有权</li>
+<li>分支/版本控制</li>
+<li>测试</li>
+<li>遗留代码</li>
+<li>数据库<br>作者罗列了不少重构时会面临的阻碍，值得一提的事对于最后两点，作者介绍了两本有指导作用的书：</li>
+<li>《修改代码的艺术 Working Effectively with Legacy Code》[Feathers]</li>
+<li>《<a href="https://martinfowler.com/articles/evodb.html" target="_blank" rel="noopener">渐进式数据库设计</a>》</li>
+<li>《数据库重构 Refactoring Databases》<br>日后有时间应该会找来一并了解一下。<blockquote>
+<p>重构的三大基石<br>自测试代码，持续集成，重构</p>
+</blockquote>
+</li>
+</ul>
+<h2 id="第二章总结"><a href="#第二章总结" class="headerlink" title="第二章总结"></a>第二章总结</h2><p>作者在第二章的观点在如今看来浅显易懂，是因为重构的理念如今已经为大多数技术人员接受。同样的，在几十年前重构所面临的诸多困难，也逐渐被持续交付/持续集成/自动化IDE一一解决。在我们小组的工作中，小规模的重构任务已经成为了我们日常工作量的一部分。我近期的一个比较ambitious的计划，就是给一个项目引入流式验证以取代以往验证逻辑积压在一个验证类中的做法。</p>
+<p>——未完待续——<br>2020.05.05</p>
 
       
     </div>
@@ -349,7 +392,7 @@ createStatementData.js<figure class="highlight plain"><table><tr><td class="gutt
         <p><span>Title:</span><a href="/2020/05/04/code_refractoring/">重构改善现有代码的设计笔记</a></p>
         <p><span>Author:</span><a href="/" title="Back to Homepage">Jarvis Yao</a></p>
         <p><span>Created:</span>2020-05-04, 11:06:09</p>
-        <p><span>Updated:</span>2020-05-04, 15:04:37</p>
+        <p><span>Updated:</span>2020-05-05, 16:44:31</p>
         <p>
             <span>Full URL:</span><a class="post-url" href="/2020/05/04/code_refractoring/" title="重构改善现有代码的设计笔记">https://hejabvbreus11.github.io/2020/05/04/code_refractoring/</a>
             <span class="copy-path" data-clipboard-text="From https://hejabvbreus11.github.io/2020/05/04/code_refractoring/　　By Jarvis Yao" title="Copy Article&#39;s Link &amp; Author"><i class="fa fa-clipboard"></i></span>
@@ -379,7 +422,7 @@ createStatementData.js<figure class="highlight plain"><table><tr><td class="gutt
     <div id="toc" class="toc-article">
         <strong class="toc-title">Contents</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#前文"><span class="toc-number">1.</span> <span class="toc-text">前文</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#第一章-重构，第一个示例"><span class="toc-number">2.</span> <span class="toc-text">第一章 重构，第一个示例</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#原书实现"><span class="toc-number">2.1.</span> <span class="toc-text">原书实现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第一章总结"><span class="toc-number">2.2.</span> <span class="toc-text">第一章总结</span></a></li></ol></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#前文"><span class="toc-number">1.</span> <span class="toc-text">前文</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#第一章-重构，第一个示例"><span class="toc-number">2.</span> <span class="toc-text">第一章 重构，第一个示例</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#原书实现"><span class="toc-number">2.1.</span> <span class="toc-text">原书实现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第一章总结"><span class="toc-number">2.2.</span> <span class="toc-text">第一章总结</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#第二章-重构的原则"><span class="toc-number">3.</span> <span class="toc-text">第二章 重构的原则</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#两顶帽子"><span class="toc-number">3.1.</span> <span class="toc-text">两顶帽子</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#为何重构"><span class="toc-number">3.2.</span> <span class="toc-text">为何重构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#何时重构"><span class="toc-number">3.3.</span> <span class="toc-text">何时重构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#重构的挑战"><span class="toc-number">3.4.</span> <span class="toc-text">重构的挑战</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第二章总结"><span class="toc-number">3.5.</span> <span class="toc-text">第二章总结</span></a></li></ol></li></ol>
         
     </div>
     <style>
